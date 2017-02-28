@@ -1,3 +1,11 @@
+//
+// presenceList_smartapp -- Expose SmartThings presence sensors via HTTPS
+// Created: Marcus Butler <marcusb@marcusb.org>, February-28-2017.
+//
+// This is a (very) simple SmartApp that returns the status of a group of
+// presence sensors (configurable in the SmartThings UI) via an HTTPS service.
+//
+
 definition(
     name: "PresenceList",
     namespace: "marcus0x62",
@@ -11,7 +19,8 @@ definition(
 
 preferences {
   section ("Allow external service to control these things...") {
-    input "presence", "capability.presenceSensor", multiple: true, required: true
+    input "presence", "capability.presenceSensor", multiple: true,
+    required: true
   }
 }
 
