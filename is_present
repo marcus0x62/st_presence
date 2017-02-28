@@ -1,17 +1,27 @@
 #!/usr/bin/python
+#
+# is_present -- Retrieve SmartThings presence sensor data
+# Created: Marcus Butler <marcusb@marcusb.org>, 28-February-2017
+#
+# This script iterates over each presence sensor exposed by a companion
+# SmartApp (see presenceList_smartapp) and returns 0 if all sensors are not
+# present, 1 if any sensor is present, and -1 on error.
+#
 
 from sys import exit
 from httplib import HTTPSConnection
 from json import loads
 
-DEBUG = 0
+### Configuration variables
+
+DEBUG = 0 # Set to 10 to troubleshoot server issues
+URI = '/api/smartapps/installations/...' # Set to the URI for your SmartApp
+API_KEY = 'XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX' # Set to your API key
+
+### Configuration variables stop here
+
 HOST = 'graph.api.smartthings.com'
-
-## This should be the URI for your SmartApp
-URI = '/api/smartapps/installations/..."
-API_KEY = 'Bearer XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX'
-
-headers = {'Authorization': API_KEY}
+headers = {'Authorization': 'Bearer %s' % API_KEY}
 
 conn = HTTPSConnection(HOST, '443')
 try:
@@ -41,4 +51,3 @@ for sensor in js_data:
         present = 1
 
 exit(present)
-
