@@ -1,0 +1,32 @@
+definition(
+    name: "PresenceList",
+    namespace: "marcus0x62",
+    author: "Marcus Butler",
+    description: "This SmartApp allows you to list presence status",
+    category: "Convenience",
+    iconUrl: "https://www.marcusb.org/PresenceList.png",
+    iconX2Url: "https://www.marcusb.org/PresenceListx2.png",
+    oauth: [displayName: "PresenceList", displayLink: ""]
+)
+
+preferences {
+  section ("Allow external service to control these things...") {
+    input "presence", "capability.presenceSensor", multiple: true, required: true
+  }
+}
+
+mappings {
+  path("/presence") {
+    action: [
+      GET: "listPresenceSensors"
+    ]
+  }
+}
+
+def listPresenceSensors() {
+    def resp = []
+    presence.each {
+      resp << [name: it.displayName, value: it.currentValue("presence")]
+    }
+    return resp
+}
